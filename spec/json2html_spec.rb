@@ -35,4 +35,9 @@ describe Json2Html do
     expect(html).to eq('<ul id="my_value"><li><div id="my_value_1">string</div></li>'\
                        '<li><div id="my_value_2">2.4</div></li><li><div id="my_value_3">false</div></li></ul>')
   end
+
+  it 'should create a div with internal divs each with unique ids for a json object' do
+    html = subject.to_html('{"my_value":{"child1":"a", "child2":"b"}}')
+    expect(html).to eq('<div id="my_value"><div id="my_value_child1">a</div><div id="my_value_child2">b</div></div>')
+  end
 end

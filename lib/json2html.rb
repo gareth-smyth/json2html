@@ -19,6 +19,21 @@ require 'JSON'
 # @example Convert a false
 #   Json2Html.new.to_html("my_value":false) == '<div id="my_value">false</div>'
 #
+# @example Convert an array
+#   Json2Html.new.to_html("my_value":[5,6]) == '<ul id="my_value">
+#                                                 <li>
+#                                                   <div id="my_value_1">5</div>
+#                                                 </li>
+#                                                 <li>
+#                                                   <div id="my_value_2">6</div>
+#                                                 </li>
+#                                               </ul>'
+#
+# @example Convert an object
+#   Json2Html.new.to_html("my_value":{"child1":"a", "child2":"b"}} == '<div id="my_value">
+#                                                                       <div id="my_value_child1">a</div>
+#                                                                       <div id="my_value_child2">b</div>
+#                                                                      </div>'
 class Json2Html
   def to_html(json_string)
     hashed_string = JSON.parse(json_string)
@@ -33,13 +48,27 @@ class Json2Html
 
   def key_value_to_html(key, value)
     if value.is_a?(Array)
-      array_html = "<ul id=\"#{key}\">"
-      value.each_with_index do |array_item, index|
-        array_html << '<li>' << key_value_to_html("#{key}_#{index + 1}", array_item) << '</li>'
-      end
-      array_html << '</ul>'
+      array_to_html(key, value)
+    elsif value.is_a?(Hash)
+      hash_to_html(key, value)
     else
       "<div id=\"#{key}\">#{value}</div>"
     end
+  end
+
+  def hash_to_html(hash_name, hash)
+    html_string = "<div id=\"#{hash_name}\">"
+    hash.each do |key, value|
+      html_string << key_value_to_html("#{hash_name}_#{key}", value)
+    end
+    html_string << '</div>'
+  end
+
+  def array_to_html(array_key, array_value)
+    array_html = "<ul id=\"#{array_key}\">"
+    array_value.each_with_index do |array_item, index|
+      array_html << '<li>' << key_value_to_html("#{array_key}_#{index + 1}", array_item) << '</li>'
+    end
+    array_html << '</ul>'
   end
 end
