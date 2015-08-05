@@ -65,6 +65,13 @@ describe Json2Html do
     expect(parsed_html.css('//div[id="my_value"]/div[id="my_value_child2"]/text()').text).to eq('b')
   end
 
+  it 'should create a label div with unique id for a json object' do
+    html = subject.to_html('{"my_value":{"child1":"a", "child2":"b"}}')
+
+    parsed_html = Nokogiri::HTML.parse(html)
+    expect(parsed_html.css('//div[id="my_value_label"]/text()').text).to eq('My Value')
+  end
+
   it 'should create a complex structure' do
     html = subject.to_html('{"child1":{"grandchild1":"value1","grandchild2":[6,7,8]},
                              "child2":[{"grandchild3":"value2" }]}')
