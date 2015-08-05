@@ -1,13 +1,8 @@
 require 'spec_helper'
-require 'nokogiri'
-
-def parse(html)
-  Nokogiri::HTML.parse(html)do |config|
-    config.strict
-  end
-end
 
 describe Json2Html do
+  include HtmlHelper
+
   it 'has a version number' do
     expect(Json2Html::VERSION).not_to be nil
   end
