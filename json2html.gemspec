@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Gareth Smyth']
   spec.email         = ['']
 
-  spec.summary       = %q{TODO: This gem allows simple conversion of json to html.}
+  spec.summary       = %q{This gem allows simple conversion of json to html.}
   spec.homepage      = 'https://github.com/gareth-smyth/json2html'
   spec.license       = 'MIT'
 
