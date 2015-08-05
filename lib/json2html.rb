@@ -5,22 +5,24 @@ require 'JSON'
 # be wrapped in a div with an id matching the object identifier.
 #
 # @example Convert a number
-#   Json2Html.new.to_html("my_value":13.5) == '<div id="my_value">13.5</div>'
+#   Json2Html.new.to_html("my_value":13.5) == '<div id="my_value_label">My Value</div><div id="my_value">13.5</div>'
 #
 # @example Convert a string
-#   Json2Html.new.to_html("my_value":"some text") == '<div id="my_value">some text</div>'
+#   Json2Html.new.to_html("my_value":"some text") == '<div id="my_value_label">My Value</div>
+#                                                     <div id="my_value">some text</div>'
 #
 # @example Convert a null
-#   Json2Html.new.to_html("my_value":null) == '<div id="my_value"></div>'
+#   Json2Html.new.to_html("my_value":null) == '<div id="my_value_label">My Value</div><div id="my_value"></div>'
 #
 # @example Convert a true
-#   Json2Html.new.to_html("my_value":true) == '<div id="my_value">true</div>'
+#   Json2Html.new.to_html("my_value":true) == '<div id="my_value_label">My Value</div><div id="my_value">true</div>'
 #
 # @example Convert a false
-#   Json2Html.new.to_html("my_value":false) == '<div id="my_value">false</div>'
+#   Json2Html.new.to_html("my_value":false) == '<div id="my_value_label">My Value</div><div id="my_value">false</div>'
 #
 # @example Convert an array
-#   Json2Html.new.to_html("my_value":[5,6]) == '<ul id="my_value">
+#   Json2Html.new.to_html("my_value":[5,6]) == '<div id="my_value_label">My Value</div>
+#                                               <ul id="my_value">
 #                                                 <li>
 #                                                   <div id="my_value_1">5</div>
 #                                                 </li>
@@ -30,7 +32,8 @@ require 'JSON'
 #                                               </ul>'
 #
 # @example Convert an object
-#   Json2Html.new.to_html("my_value":{"child1":"a", "child2":"b"}} == '<div id="my_value">
+#   Json2Html.new.to_html("my_value":{"child1":"a", "child2":"b"}} == '<div id="my_value_label">My Value</div>
+#                                                                      <div id="my_value">
 #                                                                       <div id="my_value_child1">a</div>
 #                                                                       <div id="my_value_child2">b</div>
 #                                                                      </div>'
@@ -52,12 +55,14 @@ class Json2Html
     elsif value.is_a?(Hash)
       hash_to_html(key, value)
     else
-      "<div id=\"#{key}\">#{value}</div>"
+      label = humanise(key)
+      "<div id=\"#{key}_label\">#{label}</div><div id=\"#{key}\">#{value}</div>"
     end
   end
 
   def hash_to_html(hash_name, hash)
-    html_string = "<div id=\"#{hash_name}\">"
+    label = humanise(hash_name)
+    html_string = "<div id=\"#{hash_name}_label\">#{label}</div><div id=\"#{hash_name}\">"
     hash.each do |key, value|
       html_string << key_value_to_html("#{hash_name}_#{key}", value)
     end
@@ -70,5 +75,9 @@ class Json2Html
       array_html << '<li>' << key_value_to_html("#{array_key}_#{index + 1}", array_item) << '</li>'
     end
     array_html << '</ul>'
+  end
+
+  def humanise(string)
+    string.split('_').map(&:capitalize).join(' ')
   end
 end

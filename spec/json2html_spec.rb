@@ -13,6 +13,13 @@ describe Json2Html do
     expect(parsed_html.css('//div[id="my_value"]/text()').text).to eq('13.5')
   end
 
+  it 'should add a label to the html for the node' do
+    html = subject.to_html('{"my_value":13.5}')
+
+    parsed_html = Nokogiri::HTML.parse(html)
+    expect(parsed_html.css('//div[id="my_value_label"]/text()').text).to eq('My Value')
+  end
+
   it 'should convert json text node to a div with id' do
     html = subject.to_html('{"my_value":"some text"}')
 
