@@ -24,8 +24,22 @@ class Json2Html
     hashed_string = JSON.parse(json_string)
     html_string = ''
     hashed_string.each do |key, value|
-      html_string << "<div id=\"#{key}\">#{value}</div>"
+      html_string << key_value_to_html(key, value)
     end
     html_string
+  end
+
+  private
+
+  def key_value_to_html(key, value)
+    if value.is_a?(Array)
+      array_html = "<ul id=\"#{key}\">"
+      value.each_with_index do |array_item, index|
+        array_html << '<li>' << key_value_to_html("#{key}_#{index + 1}", array_item) << '</li>'
+      end
+      array_html << '</ul>'
+    else
+      "<div id=\"#{key}\">#{value}</div>"
+    end
   end
 end

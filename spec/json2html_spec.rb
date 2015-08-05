@@ -29,4 +29,10 @@ describe Json2Html do
     html = subject.to_html('{"my_value":false}')
     expect(html).to eq('<div id="my_value">false</div>')
   end
+
+  it 'should create unordered list of primitive htmls with indexed ids for json array' do
+    html = subject.to_html('{"my_value":["string", 2.4, false]}')
+    expect(html).to eq('<ul id="my_value"><li><div id="my_value_1">string</div></li>'\
+                       '<li><div id="my_value_2">2.4</div></li><li><div id="my_value_3">false</div></li></ul>')
+  end
 end
