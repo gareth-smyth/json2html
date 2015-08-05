@@ -67,16 +67,22 @@ would become
     </ul>
 
 ## TODO
-1. Hierarchies of objects
-
-2. Allow custom configuration for different types, including selecting which elements the custom config applies to. E.g. 
+1. Allow custom configuration for different types, including selecting which elements the custom config applies to. E.g. 
 if you wanted all numbers whose identifier is "cost" to be preceded by a dollar sign it might be something like...  
 
         config do  
             number '<div id=##identifier>$##value</div>', /cost/  
         end
         
-3. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.
+2. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.
 
-4. Add css classes to the objects to avoid the use of the ids, also make the identifier generation optional
+3. Add css classes to the objects to avoid the use of the ids
+
+4. Make the identifier generation optional so it can generate cleaner html
+
+5. Optional html/partial switch so it can create a full html page from the json
+
+6. Allow css to be embedded within the html
+
+7. Command line option
  
