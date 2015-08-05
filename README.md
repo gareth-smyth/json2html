@@ -2,8 +2,10 @@
 Ruby gem allowing json to be converted very simply to html
 
 ## Usage
-Does not handle anything beyond a single level of JSON
 No configuration available as yet - simply pass in a json string and receive html.
+
+    require 'json2html'  
+    Json2Html.new.to_html(File.open(my_json_file).read)
 
 ## Currently Handles
 Single json number mapping `{"name":value}` to `<div id='name'>value</div>`  
@@ -61,12 +63,14 @@ would become
 ## TODO
 1. Hierarchies of objects
 
-2. Allow custom configuration for different types, including selecting which elements the custom config applies to. E.g. if
-you wanted all numbers whose identifier is "cost" to be preceded by a dollar sign it might be something like...  
+2. Allow custom configuration for different types, including selecting which elements the custom config applies to. E.g. 
+if you wanted all numbers whose identifier is "cost" to be preceded by a dollar sign it might be something like...  
 
         config do  
             number '<div id=##identifier>$##value</div>', /cost/  
         end
         
 3. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.
+
+4. Add css classes to the objects to avoid the use of the ids, also make the identifier generation optional
  

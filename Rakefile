@@ -3,7 +3,9 @@ require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'yard'
 
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |task|
+  task.rspec_opts = '--format documentation'
+end
 RuboCop::RakeTask.new
 YARD::Rake::YardocTask.new do |task|
   task.files = ['./lib/json2html/version.rb','./lib/json2html.rb']
