@@ -6,6 +6,13 @@ require 'JSON'
 #
 # @example Convert a number
 #   Json2Html.new.to_html("my_number":13.5) == '<div id="my_number">13.5</div>'
+#
+# @example Convert a string
+#   Json2Html.new.to_html("my_string":"some text") == '<div id="my_string">some text</div>'
+#
+# @example Convert a null
+#   Json2Html.new.to_html("my_null":null) == '<div id="my_null"></div>'
+#
 class Json2Html
   def to_html(json_string)
     hashed_string = JSON.parse(json_string)
