@@ -1,4 +1,5 @@
 require 'json2html/version'
+require 'json2html_config_dsl'
 require 'json'
 
 # This class provides the interface to convert the Json to Html.  By default each of the object values in the json will
@@ -38,6 +39,10 @@ require 'json'
 #                                                                       <div id="my_value_child2">b</div>
 #                                                                      </div>'
 class Json2Html
+  def initialize
+    @config = Json2HtmlConfig.new
+  end
+
   def to_html(json_string)
     hashed_string = JSON.parse(json_string)
     html_string = ''
@@ -49,35 +54,31 @@ class Json2Html
 
   private
 
-  def key_value_to_html(key, value)
-    if value.is_a?(Array)
-      array_to_html(key, value)
-    elsif value.is_a?(Hash)
-      hash_to_html(key, value)
+  def key_value_to_html(node_name, node_value)
+    if node_value.is_a?(Array)
+      array_to_html(node_name, node_value)
+    elsif node_value.is_a?(Hash)
+      hash_to_html(node_name, node_value)
     else
-      label = humanise(key)
-      "<div id=\"#{key}_label\">#{label}</div><div id=\"#{key}\">#{value}</div>"
+      @config.get_node(node_name, node_value)
     end
   end
 
-  def hash_to_html(hash_name, hash)
-    label = humanise(hash_name)
-    html_string = "<div id=\"#{hash_name}_label\">#{label}</div><div id=\"#{hash_name}\">"
-    hash.each do |key, value|
-      html_string << key_value_to_html("#{hash_name}_#{key}", value)
+  def hash_to_html(object_name, object)
+    html_string = @config.get_object_head(object_name, object)
+    object.each do |node_name, node_value|
+      html_string << key_value_to_html("#{object_name}_#{node_name}", node_value)
     end
-    html_string << '</div>'
+    html_string << @config.get_object_footer(object_name, object)
   end
 
-  def array_to_html(array_key, array_value)
-    array_html = "<ul id=\"#{array_key}\">"
-    array_value.each_with_index do |array_item, index|
-      array_html << '<li>' << key_value_to_html("#{array_key}_#{index + 1}", array_item) << '</li>'
+  def array_to_html(array_name, array)
+    array_html = @config.get_array_head(array_name, array)
+    array.each_with_index do |array_item, index|
+      array_html << @config.get_array_item_head(array_name, array, array_item, index)
+      array_html << key_value_to_html("#{array_name}_#{index + 1}", array_item)
+      array_html << @config.get_array_item_footer(array_name, array, array_item, index)
     end
-    array_html << '</ul>'
-  end
-
-  def humanise(string)
-    string.split('_').map(&:capitalize).join(' ')
+    array_html << @config.get_array_footer(array_name, array)
   end
 end
