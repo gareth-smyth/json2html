@@ -12,6 +12,7 @@ Single json null mapping `{"name":"value"}` to `<div id='name'></div>`
 ## TODO
 Array   => ul?
 Object  => ul?
+hierarchies of objects => ??
 
 Allow custom configuration for different types, including selecting which elements the custom config applies to. E.g. if
 you wanted all numbers whose identifier is cost preceded by a dollar sign it might be something like...

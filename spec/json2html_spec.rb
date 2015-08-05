@@ -6,27 +6,27 @@ describe Json2Html do
   end
 
   it 'should convert json number node to a div with id' do
-    html_with_number = subject.to_html('{"my_number":13.5}')
-    expect(html_with_number).to eq('<div id="my_number">13.5</div>')
+    html = subject.to_html('{"my_value":13.5}')
+    expect(html).to eq('<div id="my_value">13.5</div>')
   end
 
   it 'should convert json text node to a div with id' do
-    html_with_text = subject.to_html('{"my_text":"some text"}')
-    expect(html_with_text).to eq('<div id="my_text">some text</div>')
+    html = subject.to_html('{"my_value":"some text"}')
+    expect(html).to eq('<div id="my_value">some text</div>')
   end
 
   it 'should convert null json into empty div with id' do
-    html_with_null = subject.to_html('{"my_null":null}')
-    expect(html_with_null).to eq('<div id="my_null"></div>')
+    html = subject.to_html('{"my_value":null}')
+    expect(html).to eq('<div id="my_value"></div>')
   end
 
   it 'should convert true json value into div with id and value true' do
-    html_with_true = subject.to_html('{"my_true":true}')
-    expect(html_with_true).to eq('<div id="my_true">true</div>')
+    html = subject.to_html('{"my_value":true}')
+    expect(html).to eq('<div id="my_value">true</div>')
   end
 
   it 'should convert false json value into div with id and value false' do
-    html_with_false = subject.to_html('{"my_false":false}')
-    expect(html_with_false).to eq('<div id="my_false">false</div>')
+    html = subject.to_html('{"my_value":false}')
+    expect(html).to eq('<div id="my_value">false</div>')
   end
 end
