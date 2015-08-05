@@ -31,7 +31,32 @@ Object mapping `{"name":{"child1":"a", "child2":"b"}}` to
     <div id='name'>
       <div id='name_child1'>a</div>
       <div id='name_child2'>b</div>
+    </div>  
+    
+Complex example
+
+    {
+        "child1":{ "grandchild1":"value1", "grandchild2":[6,7,8]
+        "child2":[ { "grandchild3":"value2" }]
+    }
+    
+would become
+
+    <div id="child1">
+        <div id="child1_grandchild1">value1</div>
+        <ul id="child1_grandchild2">
+            <li><div id="child1_grandchild2_1>6</div></li>
+            <li><div id="child1_grandchild2_2>7</div></li>
+            <li><div id="child1_grandchild2_3>8</div></li>
+        </ul>
     </div>
+    <ul id="child2">
+        <li>
+            <div id="child2_1>
+               <div id="child2_1_grandchild3">value2</div>     
+            </div>
+        </li>
+    </ul>
 
 ## TODO
 1. Hierarchies of objects
@@ -42,4 +67,6 @@ you wanted all numbers whose identifier is "cost" to be preceded by a dollar sig
         config do  
             number '<div id=##identifier>$##value</div>', /cost/  
         end
+        
+3. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.
  

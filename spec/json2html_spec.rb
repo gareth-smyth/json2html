@@ -40,4 +40,24 @@ describe Json2Html do
     html = subject.to_html('{"my_value":{"child1":"a", "child2":"b"}}')
     expect(html).to eq('<div id="my_value"><div id="my_value_child1">a</div><div id="my_value_child2">b</div></div>')
   end
+
+  it 'should create a complex structure' do
+    html = subject.to_html('{"child1":{"grandchild1":"value1","grandchild2":[6,7,8]},
+                             "child2":[{"grandchild3":"value2" }]}')
+    expect(html).to eq('<div id="child1">'\
+                       '<div id="child1_grandchild1">value1</div>'\
+                       '<ul id="child1_grandchild2">'\
+                       '<li><div id="child1_grandchild2_1">6</div></li>'\
+                       '<li><div id="child1_grandchild2_2">7</div></li>'\
+                       '<li><div id="child1_grandchild2_3">8</div></li>'\
+                       '</ul>'\
+                       '</div>'\
+                       '<ul id="child2">'\
+                       '<li>'\
+                       '<div id="child2_1">'\
+                       '<div id="child2_1_grandchild3">value2</div>'\
+                       '</div>'\
+                       '</li>'\
+                       '</ul>')
+  end
 end
