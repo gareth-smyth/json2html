@@ -6,7 +6,7 @@ describe Json2Html do
   end
 
   it 'should convert json number node to a div with id' do
-    html_with_number = subject.to_html('{my_number:13.5}')
-    expect(html_with_number).to be('<div id="my_number">13.5</div>')
+    html_with_number = subject.to_html('{"my_number":13.5}')
+    expect(html_with_number).to eq('<div id="my_number">13.5</div>')
   end
 end
