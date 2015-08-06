@@ -1,8 +1,20 @@
 # This class holds the configuration used to generate the html - further documentation will follow once it can use more
 # than just the default mappings
 class Json2HtmlConfig
+  def initialize(&block)
+    # set defaults
+    node '<div id="%<key>s_label">%<name>s</div><div id="%<key>s">%<value>s</div>'
+
+    # run the block which can override the defaults
+    instance_eval(&block) if block_given?
+  end
+
+  def node(template_string)
+    @node_template = template_string
+  end
+
   def get_node(key, value, name)
-    "<div id=\"#{key}_label\">#{humanise(name)}</div><div id=\"#{key}\">#{value}</div>"
+    @node_template % { key: key, value: value, name: humanise(name) }
   end
 
   def get_object_head(full_key, _object, node_name)
@@ -30,6 +42,6 @@ class Json2HtmlConfig
   end
 
   def humanise(string)
-    string.split('_').map(&:capitalize).join(' ')
+    string.split('_').map(&:capitalize).join(' ') unless string.to_s == ''
   end
 end
