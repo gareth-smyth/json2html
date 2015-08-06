@@ -2,11 +2,21 @@
 # than just the default mappings
 class Json2HtmlConfig
   def initialize(&block)
-    # set defaults
-    node '<div id="%<key>s_label">%<name>s</div><div id="%<key>s">%<value>s</div>'
-
+    defaults.call
     # run the block which can override the defaults
     instance_eval(&block) if block_given?
+  end
+
+  def defaults
+    proc do
+      node '<div id="%<key>s_label">%<name>s</div><div id="%<key>s">%<value>s</div>'
+      object_head '<div id="%<key>s_label">%<name>s</div><div id="%<key>s">'
+      object_footer '</div>'
+      array_head '<ul id="%<key>s">'
+      array_footer '</ul>'
+      array_item_head '<li>'
+      array_item_footer '</li>'
+    end
   end
 
   def node(template_string)
@@ -17,28 +27,54 @@ class Json2HtmlConfig
     @node_template % { key: key, value: value, name: humanise(name) }
   end
 
-  def get_object_head(full_key, _object, node_name)
-    "<div id=\"#{full_key}_label\">#{humanise(node_name)}</div><div id=\"#{full_key}\">"
+  def object_head(template_string)
+    @object_head_template = template_string
   end
 
-  def get_object_footer(_full_key, _object, _node_name)
-    '</div>'
+  def get_object_head(full_key, object, node_name)
+    @object_head_template % { key: full_key, value: object, name: humanise(node_name) }
   end
 
-  def get_array_head(full_key, _array, _array_name)
-    "<ul id=\"#{full_key}\">"
+  def object_footer(template_string)
+    @object_footer_template = template_string
   end
 
-  def get_array_footer(_full_key, _array, _array_name)
-    '</ul>'
+  def get_object_footer(full_key, object, node_name)
+    @object_footer_template % { key: full_key, value: object, name: humanise(node_name) }
   end
 
-  def get_array_item_head(_full_key, _array, _array_name, _array_item, _index)
-    '<li>'
+  def array_head(template_string)
+    @array_head_template = template_string
   end
 
-  def get_array_item_footer(_full_key, _array, _array_name, _array_item, _index)
-    '</li>'
+  def get_array_head(full_key, array, array_name)
+    @array_head_template % { key: full_key, array: array, array: humanise(array_name) }
+  end
+
+  def array_footer(template_string)
+    @array_footer_template = template_string
+  end
+
+  def get_array_footer(full_key, array, array_name)
+    @array_footer_template % { key: full_key, array: array, array: humanise(array_name) }
+  end
+
+  def array_item_head(template_string)
+    @array_item_head_template = template_string
+  end
+
+  def get_array_item_head(full_key, array, array_name, array_item, index)
+    @array_item_head_template % { key: full_key, array: array, array: humanise(array_name),
+                                  item: array_item, index: index }
+  end
+
+  def array_item_footer(template_string)
+    @array_item_footer_template = template_string
+  end
+
+  def get_array_item_footer(full_key, array, array_name, array_item, index)
+    @array_item_footer_template % { key: full_key, array: array, array: humanise(array_name),
+                                    item: array_item, index: index }
   end
 
   def humanise(string)
