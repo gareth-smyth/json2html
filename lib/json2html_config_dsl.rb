@@ -9,13 +9,13 @@ class Json2HtmlConfig
 
   def defaults
     proc do
-      node '<div id="%<key>s_label">%<name>s</div><div id="%<key>s">%<value>s</div>'
-      object_head '<div id="%<key>s_label">%<name>s</div><div id="%<key>s">'
-      object_footer '</div>'
-      array_head '<ul id="%<key>s">'
-      array_footer '</ul>'
-      array_item_head '<li>'
-      array_item_footer '</li>'
+      node '<div><div>%<name>s</div><div>%<value>s</div></div>'
+      object_head '<div><div>%<name>s</div><div>'
+      object_footer '</div></div>'
+      array_head '<div><div>%<name>s</div><div>'
+      array_footer '</div></div>'
+      array_item_head '<div>'
+      array_item_footer '</div>'
     end
   end
 
