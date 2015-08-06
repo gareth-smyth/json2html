@@ -36,11 +36,11 @@ require 'json'
 #   Json2Html.new.to_html("my_value":{"child1":"a", "child2":"b"}} == '<div id="my_value_label">My Value</div>
 #                                                                      <div id="my_value">
 #                                                                       <div id="my_value_child1">a</div>
-#                                                                       <div id="my_value_child2">b</div>
+#                                 Configur                                      <div id="my_value_child2">b</div>
 #                                                                      </div>'
 class Json2Html
-  def initialize
-    @config = Json2HtmlConfig.new
+  def initialize(&block)
+    @config = Json2HtmlConfig.new(&block)
   end
 
   def to_html(json_string)
