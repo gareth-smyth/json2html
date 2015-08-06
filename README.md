@@ -2,12 +2,61 @@
 Ruby gem allowing json to be converted very simply to html
 
 ## Usage
-No configuration available as yet - simply pass in a json string and receive html.
+If no configuration is passed you can simply pass in a json string and receive html.
 
     require 'json2html'  
     Json2Html.new.to_html(File.open(my_json_file).read)
 
-## Currently Handles
+See json2html_config_dsl.rb for the default configuration templates.
+
+### Configuration
+There are a number of templates which can be configured to allow the output of the to_html method to change.  The 
+templates are interpreted as sprintf with the named parameters available shown below.  See 
+[Kernel format](http://ruby-doc.org/core-2.2.0/Kernel.html#method-i-format) for more detail.  
+
+####Configuration Elements  
+
+1. node  
+    a. key = the full hierarchical key   
+    b. value = the node value  
+    c. name = the "humanised" node name  
+    
+2. object_head  
+    a. key = the full hierarchical key   
+    b. object = the object (not sure how this can actually be used in a format string)  
+    c. name = the "humanised" object name 
+       
+3. object_footer  
+    a. key = the full hierarchical key   
+    b. object = the object (not sure how this can actually be used in a format string)  
+    c. name = the "humanised" object name 
+         
+4. array_head  
+    a. key = the full hierarchical key     
+    b. array = the array (not sure how this can actually be used in a format string)    
+    c. name = the "humanised" array name   
+    
+5. array_footer  
+    a. key = the full hierarchical key     
+    b. array = the array (not sure how this can actually be used in a format string)    
+    c. name = the "humanised" array name   
+    
+6. array_item_head  
+    a. key = the full hierarchical key     
+    b. array = the array (not sure how this can actually be used in a format string)    
+    c. name = the "humanised" array name  
+    d. item = the item in the array  
+    e. index = the one based index into the array of the current item
+    
+7. array_item_footer  
+    a. key = the full hierarchical key     
+    b. array = the array (not sure how this can actually be used in a format string)    
+    c. name = the "humanised" array name  
+    d. item = the item in the array  
+    e. index = the one based index into the array of the current item
+
+## Examples
+### Simple examples
 Single json number mapping `{"name":value}` to `<div id="name_label">Name</div><div id='name'>value</div>`  
 Single json string mapping `{"name":"value"}` to `<div id="name_label">Name</div><div id='name'>value</div>`  
 Single json null mapping `{"name":null}` to `<div id="name_label">Name</div><div id='name'></div>`  
@@ -65,13 +114,23 @@ would become
             </div>
         </li>
     </ul>
+    
+### Configuration Examples
 
+    require 'json2html'  
+    json2html = Json2Html.new do
+        node '<div><span id="%<key>s_label">%<name>s</span><span id="%<key>s">%<value>s</span></div>'
+    end
+    
+    json2html.to_html(File.open(my_json_file).read)
+    
+    
 ## TODO
-1. Allow custom configuration for different types, including selecting which elements the custom config applies to. E.g. 
-if you wanted all numbers whose identifier is "cost" to be preceded by a dollar sign it might be something like...  
+1. Allow configuration to be filtered by regexp - so you can have different templates for different nodes/objects/arrays
+ based on the name
 
         config do  
-            number '<div id=##identifier>$##value</div>', /cost/  
+            node '<div id=##identifier>$##value</div>', /cost/  
         end
         
 2. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.

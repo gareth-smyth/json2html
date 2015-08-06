@@ -32,7 +32,7 @@ class Json2HtmlConfig
   end
 
   def get_object_head(full_key, object, node_name)
-    @object_head_template % { key: full_key, value: object, name: humanise(node_name) }
+    @object_head_template % { key: full_key, object: object, name: humanise(node_name) }
   end
 
   def object_footer(template_string)
@@ -40,7 +40,7 @@ class Json2HtmlConfig
   end
 
   def get_object_footer(full_key, object, node_name)
-    @object_footer_template % { key: full_key, value: object, name: humanise(node_name) }
+    @object_footer_template % { key: full_key, object: object, name: humanise(node_name) }
   end
 
   def array_head(template_string)
@@ -48,7 +48,7 @@ class Json2HtmlConfig
   end
 
   def get_array_head(full_key, array, array_name)
-    @array_head_template % { key: full_key, array: array, array: humanise(array_name) }
+    @array_head_template % { key: full_key, array: array, name: humanise(array_name) }
   end
 
   def array_footer(template_string)
@@ -56,7 +56,7 @@ class Json2HtmlConfig
   end
 
   def get_array_footer(full_key, array, array_name)
-    @array_footer_template % { key: full_key, array: array, array: humanise(array_name) }
+    @array_footer_template % { key: full_key, array: array, name: humanise(array_name) }
   end
 
   def array_item_head(template_string)
@@ -64,7 +64,7 @@ class Json2HtmlConfig
   end
 
   def get_array_item_head(full_key, array, array_name, array_item, index)
-    @array_item_head_template % { key: full_key, array: array, array: humanise(array_name),
+    @array_item_head_template % { key: full_key, array: array, name: humanise(array_name),
                                   item: array_item, index: index }
   end
 
@@ -73,7 +73,7 @@ class Json2HtmlConfig
   end
 
   def get_array_item_footer(full_key, array, array_name, array_item, index)
-    @array_item_footer_template % { key: full_key, array: array, array: humanise(array_name),
+    @array_item_footer_template % { key: full_key, array: array, name: humanise(array_name),
                                     item: array_item, index: index }
   end
 
