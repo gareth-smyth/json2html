@@ -47,38 +47,38 @@ class Json2Html
     hashed_string = JSON.parse(json_string)
     html_string = ''
     hashed_string.each do |key, value|
-      html_string << key_value_to_html(key, value)
+      html_string << key_value_to_html(key, value, key)
     end
     html_string
   end
 
   private
 
-  def key_value_to_html(node_name, node_value)
+  def key_value_to_html(full_key, node_value, node_name)
     if node_value.is_a?(Array)
-      array_to_html(node_name, node_value)
+      array_to_html(full_key, node_value, node_name)
     elsif node_value.is_a?(Hash)
-      hash_to_html(node_name, node_value)
+      hash_to_html(full_key, node_value, node_name)
     else
-      @config.get_node(node_name, node_value)
+      @config.get_node(full_key, node_value, node_name)
     end
   end
 
-  def hash_to_html(object_name, object)
-    html_string = @config.get_object_head(object_name, object)
-    object.each do |node_name, node_value|
-      html_string << key_value_to_html("#{object_name}_#{node_name}", node_value)
+  def hash_to_html(full_key, object, node_name)
+    html_string = @config.get_object_head(full_key, object, node_name)
+    object.each do |child_node_name, node_value|
+      html_string << key_value_to_html("#{full_key}_#{child_node_name}", node_value, child_node_name)
     end
-    html_string << @config.get_object_footer(object_name, object)
+    html_string << @config.get_object_footer(full_key, object, node_name)
   end
 
-  def array_to_html(array_name, array)
-    array_html = @config.get_array_head(array_name, array)
+  def array_to_html(full_key, array, array_name)
+    array_html = @config.get_array_head(full_key, array, array_name)
     array.each_with_index do |array_item, index|
-      array_html << @config.get_array_item_head(array_name, array, array_item, index)
-      array_html << key_value_to_html("#{array_name}_#{index + 1}", array_item)
-      array_html << @config.get_array_item_footer(array_name, array, array_item, index)
+      array_html << @config.get_array_item_head(full_key, array, array_name, array_item, index)
+      array_html << key_value_to_html("#{full_key}_#{index + 1}", array_item, "#{index + 1}")
+      array_html << @config.get_array_item_footer(full_key, array, array_name, array_item, index)
     end
-    array_html << @config.get_array_footer(array_name, array)
+    array_html << @config.get_array_footer(full_key, array, array_name)
   end
 end

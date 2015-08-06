@@ -76,6 +76,7 @@ describe Json2Html do
 
     parsed_html = parse(html)
     expect(parsed_html.css('//div[id="my_value_label"]/text()').text).to eq('My Value')
+    expect(parsed_html.css('//div[id="my_value"]/div[id="my_value_child1_label"]/text()').text).to eq('Child1')
   end
 
   it 'should create a complex structure' do
