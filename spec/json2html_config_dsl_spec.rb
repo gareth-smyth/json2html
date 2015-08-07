@@ -16,7 +16,7 @@ describe Json2HtmlConfig do
     it 'uses the default config for an object header' do
       expect(config.get_object_head('key', nil, 'name')).to eq('<div class="json-object">'\
                                                                  '<div class="json-object-name">Name</div>'\
-                                                               '<div>')
+                                                                 '<div class="json-object-body">')
     end
 
     it 'uses the default config for an object footer' do

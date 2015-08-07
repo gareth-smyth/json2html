@@ -11,7 +11,7 @@ class Json2HtmlConfig
     proc do
       node '<div class="json-node"><div class="json-node-name">%<name>s</div>'\
            '<div class="json-node-value">%<value>s</div></div>'
-      object_head '<div class="json-object"><div class="json-object-name">%<name>s</div><div>'
+      object_head '<div class="json-object"><div class="json-object-name">%<name>s</div><div class="json-object-body">'
       object_footer '</div></div>'
       array_head '<div class="json-array"><div class="json-array-name">%<name>s</div><div>'
       array_footer '</div></div>'
