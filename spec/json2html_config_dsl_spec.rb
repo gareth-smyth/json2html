@@ -34,7 +34,7 @@ describe Json2HtmlConfig do
     end
 
     it 'uses the default config for an array item header' do
-      expect(config.get_array_item_head(nil, nil, nil, nil, nil)).to eq('<div>')
+      expect(config.get_array_item_head(nil, nil, nil, nil, nil)).to eq('<div class="json-array-item">')
     end
 
     it 'uses the default config for an array footer' do

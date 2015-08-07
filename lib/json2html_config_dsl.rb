@@ -15,7 +15,7 @@ class Json2HtmlConfig
       object_footer '</div></div>'
       array_head '<div class="json-array"><div class="json-array-name">%<name>s</div><div class="json-array-body">'
       array_footer '</div></div>'
-      array_item_head '<div>'
+      array_item_head '<div class="json-array-item">'
       array_item_footer '</div>'
     end
   end
