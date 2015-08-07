@@ -57,63 +57,132 @@ templates are interpreted as sprintf with the named parameters available shown b
 
 ## Examples
 ### Simple examples
-Single json number mapping `{"name":value}` to `<div id="name_label">Name</div><div id='name'>value</div>`  
-Single json string mapping `{"name":"value"}` to `<div id="name_label">Name</div><div id='name'>value</div>`  
-Single json null mapping `{"name":null}` to `<div id="name_label">Name</div><div id='name'></div>`  
-Single json true mapping `{"name":true}` to `<div id="name_label">Name</div><div id='name'>true</div>`  
-Single json false mapping `{"name":false}` to `<div id="name_label">Name</div><div id='name'>false</div>`  
-
-Array mapping `{"name":["a","b","c"]}` to  
-  
-    <div id="name_label">Name</div>
-    <ul id='name'>  
-      <li>  
-        <div id='name_1'>a</div>  
-      </li>  
-      <li>  
-        <div id='name_2'>b</div>  
-      </li>  
-      <li>  
-        <div id='name_3'>c</div>  
-      </li>  
-    </ul>  
+Single json number mapping `Json2Html.new.to_html('{"name":1.2}')` to 
     
-Object mapping `{"name":{"child1":"a", "child2":"b"}}` to
-
-    <div id="name_label">Name</div>
-    <div id='name'>
-      <div id="name_child1_label">Child1</div><div id='name_child1'>a</div>
-      <div id="name_child2_label">Child1</div><div id='name_child2'>b</div>
+    <div class="json-node">
+        <div class="json-node-name">Name</div>
+        <div class="json-node-value">1.2</div>
     </div>  
+    
+Single json string mapping `Json2Html.new.to_html('{"name":"value"}')` to 
+    
+    <div class="json-node">
+        <div class="json-node-name">Name</div>
+        <div class="json-node-value">value</div>
+    </div>  
+    
+Single json null mapping `Json2Html.new.to_html('{"name":null}')` to 
+    
+    <div class="json-node">
+        <div class="json-node-name">Name</div>
+        <div class="json-node-value"></div>
+    </div>  
+    
+Single json true mapping `Json2Html.new.to_html('{"name":true}')` to 
+    
+    <div class="json-node">
+        <div class="json-node-name">Name</div>
+        <div class="json-node-value">true</div>
+    </div>  
+    
+Single json false mapping `Json2Html.new.to_html('{"name":false}')` to 
+    
+    <div class="json-node">
+        <div class="json-node-name">Name</div>
+        <div class="json-node-value">false</div>
+    </div>  
+
+Array mapping `Json2Html.new.to_html('{"name":["a","b","c"]}')` to  
+  
+    <div class="json-array">
+        <div class="json-array-name">Name</div>
+        <div class="json-array-body">
+            <div class="json-array-item">
+                <div class="json-node">
+                    <div class="json-node-name">1</div>
+                    <div class="json-node-value">a</div>
+                </div>
+            </div>
+            <div class="json-array-item">
+                <div class="json-node">
+                    <div class="json-node-name">2</div>
+                    <div class="json-node-value">b</div>
+                </div>
+            </div>
+            <div class="json-array-item">
+                <div class="json-node">
+                    <div class="json-node-name">3</div>
+                    <div class="json-node-value">c</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+Object mapping `Json2Html.new.to_html('{"name":{"child1":"a", "child2":"b"}}')` to
+
+    <div class="json-object">
+        <div class="json-object-name">Name</div>
+        <div class="json-object-body">
+            <div class="json-node">
+                <div class="json-node-name">Child1</div>
+                <div class="json-node-value">a</div>
+            </div>
+            <div class="json-node">
+                <div class="json-node-name">Child2</div>
+                <div class="json-node-value">b</div>
+            </div>
+        </div>
+    </div>
     
 Complex example
 
-    {
-        "child1":{ "grandchild1":"value1", "grandchild2":[6,7,8]
-        "child2":[ { "grandchild3":"value2" }]
-    }
+    Json2Html.new.to_html('{"child1":{ "grandchild1":"value1", "grandchild2":[6,7,8], "child2":[ { "grandchild3":"value2" }]}}')
     
 would become
 
-    <div id="child1_label">Child1</div>
-    <div id="child1">
-        <div id="child1_grandchild1_label">Grandchild1</div><div id="child1_grandchild1">value1</div>
-        <div id="child1_grandchild2_label">Grandchild2</div>
-        <ul id="child1_grandchild2">
-            <li><div id="child1_grandchild2_1>6</div></li>
-            <li><div id="child1_grandchild2_2>7</div></li>
-            <li><div id="child1_grandchild2_3>8</div></li>
-        </ul>
-    </div>
-    <div id="child2_label">Child2</div>
-    <ul id="child2">
-        <li>
-            <div id="child2_1>
-                <div id="child2_1_grandchild3_label">Grandchild3</div>
-                <div id="child2_1_grandchild3">value2</div>     
+    <div class="json-object">
+        <div class="json-object-name">Child1</div>
+        <div class="json-object-body">
+            <div class="json-node">
+                <div class="json-node-name">Grandchild1</div>
+                <div class="json-node-value">value1</div>
             </div>
-        </li>
-    </ul>
+            <div class="json-array">
+                <div class="json-array-name">Grandchild2</div>
+                <div class="json-array-body">
+                    <div class="json-array-item">
+                        <div class="json-node">
+                            <div class="json-node-name">1</div>
+                            <div class="json-node-value">6</div>
+                        </div>
+                    </div>
+                    <div class="json-array-item">
+                        <div class="json-node">
+                            <div class="json-node-name">2</div>
+                            <div class="json-node-value">7</div>
+                        </div>
+                    </div>
+                    <div class="json-array-item">
+                        <div class="json-node">
+                            <div class="json-node-name">3</div>
+                            <div class="json-node-value">8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="json-array">
+                <div class="json-array-name">Child2</div>
+                <div class="json-array-body">
+                    <div class="json-array-item">
+                        <div class="json-node">
+                            <div class="json-node-name">Grandchild3</div>
+                            <div class="json-node-value">value2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
 ### Configuration Examples
 
