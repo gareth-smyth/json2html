@@ -26,7 +26,7 @@ describe Json2HtmlConfig do
     it 'uses the default config for an array header' do
       expect(config.get_array_head('key', nil, 'name')).to eq('<div class="json-array">'\
                                                                 '<div class="json-array-name">Name</div>'\
-                                                              '<div>')
+                                                              '<div class="json-array-body">')
     end
 
     it 'uses the default config for an array footer' do

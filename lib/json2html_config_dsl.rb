@@ -13,7 +13,7 @@ class Json2HtmlConfig
            '<div class="json-node-value">%<value>s</div></div>'
       object_head '<div class="json-object"><div class="json-object-name">%<name>s</div><div class="json-object-body">'
       object_footer '</div></div>'
-      array_head '<div class="json-array"><div class="json-array-name">%<name>s</div><div>'
+      array_head '<div class="json-array"><div class="json-array-name">%<name>s</div><div class="json-array-body">'
       array_footer '</div></div>'
       array_item_head '<div>'
       array_item_footer '</div>'
