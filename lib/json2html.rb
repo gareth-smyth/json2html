@@ -5,39 +5,8 @@ require 'json'
 # This class provides the interface to convert the Json to Html.  By default each of the object values in the json will
 # be wrapped in a div with an id matching the object identifier.
 #
-# @example Convert a number
-#   Json2Html.new.to_html("my_value":13.5) == '<div id="my_value_label">My Value</div><div id="my_value">13.5</div>'
+# See README.md for examples
 #
-# @example Convert a string
-#   Json2Html.new.to_html("my_value":"some text") == '<div id="my_value_label">My Value</div>
-#                                                     <div id="my_value">some text</div>'
-#
-# @example Convert a null
-#   Json2Html.new.to_html("my_value":null) == '<div id="my_value_label">My Value</div><div id="my_value"></div>'
-#
-# @example Convert a true
-#   Json2Html.new.to_html("my_value":true) == '<div id="my_value_label">My Value</div><div id="my_value">true</div>'
-#
-# @example Convert a false
-#   Json2Html.new.to_html("my_value":false) == '<div id="my_value_label">My Value</div><div id="my_value">false</div>'
-#
-# @example Convert an array
-#   Json2Html.new.to_html("my_value":[5,6]) == '<div id="my_value_label">My Value</div>
-#                                               <ul id="my_value">
-#                                                 <li>
-#                                                   <div id="my_value_1">5</div>
-#                                                 </li>
-#                                                 <li>
-#                                                   <div id="my_value_2">6</div>
-#                                                 </li>
-#                                               </ul>'
-#
-# @example Convert an object
-#   Json2Html.new.to_html("my_value":{"child1":"a", "child2":"b"}} == '<div id="my_value_label">My Value</div>
-#                                                                      <div id="my_value">
-#                                                                       <div id="my_value_child1">a</div>
-#                                 Configur                                      <div id="my_value_child2">b</div>
-#                                                                      </div>'
 class Json2Html
   def initialize(&block)
     @config = Json2HtmlConfig.new(&block)
