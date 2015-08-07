@@ -7,7 +7,7 @@ class Json2HtmlConfig
     instance_eval(&block) if block_given?
   end
 
-  def defaults
+  def defaults # rubocop:disable Metrics/MethodLength
     proc do
       node '<div class="json-node"><div class="json-node-name">%<name>s</div>'\
            '<div class="json-node-value">%<value>s</div></div>'
@@ -17,7 +17,13 @@ class Json2HtmlConfig
       array_footer '</div></div>'
       array_item_head '<div class="json-array-item">'
       array_item_footer '</div>'
+      collapse_array_item_objects false
     end
+  end
+
+  def collapse_array_item_objects(collapse = nil)
+    @collapse_array_item_objects = collapse unless collapse.nil?
+    @collapse_array_item_objects
   end
 
   def node(template_string)

@@ -135,15 +135,9 @@ would become
         
 2. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.
 
-3. Add css classes to the objects to avoid the use of the ids
+3. Optional html/partial switch so it can create a full html page from the json
 
-4. Make the identifier generation optional so it can generate cleaner html
+4. Command line option
 
-5. Optional html/partial switch so it can create a full html page from the json
-
-6. Allow css to be embedded within the html
-
-7. Command line option
-
-8. Convert the templates from printf to some more fully functional templating engine e.g. haml.
+5. Convert the templates from printf to some more fully functional templating engine e.g. haml.
  
