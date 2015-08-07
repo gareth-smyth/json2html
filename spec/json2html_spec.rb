@@ -83,24 +83,24 @@ describe Json2Html do
     expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 2, 1, 1, 2])).text).to eq('6')
     expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 2, 2, 1, 2])).text).to eq('7')
     expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 2, 3, 1, 2])).text).to eq('8')
-    expect(parsed_html.css(generate_css_div_selectors([2, 2, 1, 1, 2, 1, 2])).text).to eq('value2')
+    expect(parsed_html.css(generate_css_div_selectors([2, 2, 1, 1, 2])).text).to eq('value2')
   end
 
-  context 'when collapse_children_of_arrays is set' do
-    subject { Json2Html.new { collapse_array_item_objects true } }
+  context 'when collapse_children_of_arrays is set false' do
+    subject { Json2Html.new { collapse_array_item_objects false } }
 
-    it 'should collapse child objects of arrays when requested' do
+    it 'should not collapse child objects of arrays' do
       html = subject.to_html('{"array":[{"a":1, "b":2},{"a":3,"b":4}]}')
 
       parsed_html = parse(html)
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 1, 1])).text).to eq('A')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 1, 2])).text).to eq('1')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 2, 1])).text).to eq('B')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 2, 2])).text).to eq('2')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 1, 1])).text).to eq('A')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 1, 2])).text).to eq('3')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 2, 1])).text).to eq('B')
-      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 2, 2])).text).to eq('4')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 1, 2, 1, 1])).text).to eq('A')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 1, 2, 1, 2])).text).to eq('1')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 1, 2, 2, 1])).text).to eq('B')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 1, 1, 2, 2, 2])).text).to eq('2')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 1, 2, 1, 1])).text).to eq('A')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 1, 2, 1, 2])).text).to eq('3')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 1, 2, 2, 1])).text).to eq('B')
+      expect(parsed_html.css(generate_css_div_selectors([1, 2, 2, 1, 2, 2, 2])).text).to eq('4')
     end
   end
 end

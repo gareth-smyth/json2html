@@ -17,7 +17,7 @@ class Json2HtmlConfig
       array_footer '</div></div>'
       array_item_head '<div class="json-array-item">'
       array_item_footer '</div>'
-      collapse_array_item_objects false
+      collapse_array_item_objects true
     end
   end
 
