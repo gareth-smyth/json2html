@@ -125,7 +125,7 @@ would become
     json2html.to_html(File.open(my_json_file).read)
     
     
-## TODO
+## TODO (in no particular order)
 1. Allow configuration to be filtered by regexp - so you can have different templates for different nodes/objects/arrays
  based on the name
 
@@ -144,4 +144,6 @@ would become
 6. Allow css to be embedded within the html
 
 7. Command line option
+
+8. Convert the templates from printf to some more fully functional templating engine e.g. haml.
  

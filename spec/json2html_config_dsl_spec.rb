@@ -7,11 +7,16 @@ describe Json2HtmlConfig do
     subject(:config) { Json2HtmlConfig.new }
 
     it 'uses the default config for a node' do
-      expect(config.get_node('key', 'val', 'name')).to eq('<div><div>Name</div><div>val</div></div>')
+      expect(config.get_node('key', 'val', 'name')).to eq('<div class="json-node">'\
+                                                            '<div class="json-node-name">Name</div>'\
+                                                            '<div class="json-node-value">val</div>'\
+                                                          '</div>')
     end
 
     it 'uses the default config for an object header' do
-      expect(config.get_object_head('key', nil, 'name')).to eq('<div><div>Name</div><div>')
+      expect(config.get_object_head('key', nil, 'name')).to eq('<div class="json-object">'\
+                                                                 '<div class="json-object-name">Name</div>'\
+                                                               '<div>')
     end
 
     it 'uses the default config for an object footer' do
@@ -19,7 +24,9 @@ describe Json2HtmlConfig do
     end
 
     it 'uses the default config for an array header' do
-      expect(config.get_array_head('key', nil, 'name')).to eq('<div><div>Name</div><div>')
+      expect(config.get_array_head('key', nil, 'name')).to eq('<div class="json-array">'\
+                                                                '<div class="json-array-name">Name</div>'\
+                                                              '<div>')
     end
 
     it 'uses the default config for an array footer' do

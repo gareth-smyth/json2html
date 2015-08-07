@@ -9,10 +9,11 @@ class Json2HtmlConfig
 
   def defaults
     proc do
-      node '<div><div>%<name>s</div><div>%<value>s</div></div>'
-      object_head '<div><div>%<name>s</div><div>'
+      node '<div class="json-node"><div class="json-node-name">%<name>s</div>'\
+           '<div class="json-node-value">%<value>s</div></div>'
+      object_head '<div class="json-object"><div class="json-object-name">%<name>s</div><div>'
       object_footer '</div></div>'
-      array_head '<div><div>%<name>s</div><div>'
+      array_head '<div class="json-array"><div class="json-array-name">%<name>s</div><div>'
       array_footer '</div></div>'
       array_item_head '<div>'
       array_item_footer '</div>'
