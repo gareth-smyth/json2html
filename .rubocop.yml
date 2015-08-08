@@ -13,4 +13,5 @@ Documentation:
 
 Style/TrivialAccessors:
   Exclude:
-    - '**/*.dsl.rb'
+    - '**/*dsl*.rb'
+

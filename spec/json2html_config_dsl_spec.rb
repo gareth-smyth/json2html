@@ -3,33 +3,79 @@ require 'spec_helper'
 describe Json2HtmlConfig do
   include HtmlHelper
 
-  context 'when no config is supplied' do
-    it 'returns the default node template' do
-      expect(subject.get_node('name', 'val')).to eq('<div id="name_label">Name</div><div id="name">val</div>')
+  context 'when no configuration is supplied' do
+    subject(:config) { Json2HtmlConfig.new }
+
+    it 'uses the default config for a node' do
+      expect(config.get_node('key', 'val', 'name')).to eq('<div class="json-node">'\
+                                                            '<div class="json-node-name">Name</div>'\
+                                                            '<div class="json-node-value">val</div>'\
+                                                          '</div>')
     end
 
-    it 'returns the default object head template' do
-      expect(subject.get_object_head('name', nil)).to eq('<div id="name_label">Name</div><div id="name">')
+    it 'uses the default config for an object header' do
+      expect(config.get_object_head('key', nil, 'name')).to eq('<div class="json-object">'\
+                                                                 '<div class="json-object-name">Name</div>'\
+                                                                 '<div class="json-object-body">')
     end
 
-    it 'returns the default object footer' do
-      expect(subject.get_object_footer(nil, nil)).to eq('</div>')
+    it 'uses the default config for an object footer' do
+      expect(config.get_object_footer(nil, nil, nil)).to eq('</div></div>')
     end
 
-    it 'returns the default array head' do
-      expect(subject.get_array_head('name', nil)).to eq('<ul id="name">')
+    it 'uses the default config for an array header' do
+      expect(config.get_array_head('key', nil, 'name')).to eq('<div class="json-array">'\
+                                                                '<div class="json-array-name">Name</div>'\
+                                                              '<div class="json-array-body">')
     end
 
-    it 'returns the default array foot' do
-      expect(subject.get_array_footer(nil, nil)).to eq('</ul>')
+    it 'uses the default config for an array footer' do
+      expect(config.get_array_footer(nil, nil, nil)).to eq('</div></div>')
     end
 
-    it 'returns the default array item head' do
-      expect(subject.get_array_item_head(nil, nil, nil, nil)).to eq('<li>')
+    it 'uses the default config for an array item header' do
+      expect(config.get_array_item_head(nil, nil, nil, nil, nil)).to eq('<div class="json-array-item">')
     end
 
-    it 'returns the default array item foot' do
-      expect(subject.get_array_item_footer(nil, nil, nil, nil)).to eq('</li>')
+    it 'uses the default config for an array footer' do
+      expect(config.get_array_item_footer(nil, nil, nil, nil, nil)).to eq('</div>')
+    end
+  end
+
+  context 'when some template configuration is provided' do
+    subject(:config) do
+      Json2HtmlConfig.new do
+        node 'some new node text'
+      end
+    end
+
+    it 'overrides only the configuration requested' do
+      expect(config.get_node(nil, nil, nil)).to eq('some new node text')
+      expect(config.get_object_footer(nil, nil, nil)).to eq('</div></div>')
+    end
+  end
+
+  context 'when full template configuration is provided' do
+    subject(:config) do
+      Json2HtmlConfig.new do
+        node 'some new node text'
+        object_head 'object head text'
+        object_footer 'object footer text'
+        array_head 'array head text'
+        array_footer 'array footer text'
+        array_item_head 'array item head text'
+        array_item_footer 'array item footer text'
+      end
+    end
+
+    it 'overrides all the configuration requested' do
+      expect(config.get_node(nil, nil, nil)).to eq('some new node text')
+      expect(config.get_object_head(nil, nil, nil)).to eq('object head text')
+      expect(config.get_object_footer(nil, nil, nil)).to eq('object footer text')
+      expect(config.get_array_head(nil, nil, nil)).to eq('array head text')
+      expect(config.get_array_footer(nil, nil, nil)).to eq('array footer text')
+      expect(config.get_array_item_head(nil, nil, nil, nil, nil)).to eq('array item head text')
+      expect(config.get_array_item_footer(nil, nil, nil, nil, nil)).to eq('array item footer text')
     end
   end
 end
