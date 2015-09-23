@@ -202,11 +202,11 @@ would become
             node '<div id=##identifier>$##value</div>', /cost/  
         end
         
-2. Allow identifier naming scheme to be changed e.g. attach a prefix to all ids to stop clashes.
+2. Optional html/partial switch so it can create a full html page from the json
 
-3. Optional html/partial switch so it can create a full html page from the json
+3. Command line option
 
-4. Command line option
-
-5. Convert the templates from printf to some more fully functional templating engine e.g. haml.
+4. Convert the templates from printf to some more fully functional templating engine e.g. haml.
+  
+5. Add form elements
  
