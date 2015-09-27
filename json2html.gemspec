@@ -25,5 +25,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'nokogiri'
   spec.add_development_dependency 'json'
-  spec.add_development_dependency 'cucumber'
 end
