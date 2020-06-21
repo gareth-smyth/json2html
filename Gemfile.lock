@@ -16,7 +16,7 @@ GEM
     parser (2.7.1.4)
       ast (~> 2.4.1)
     rainbow (3.0.0)
-    rake (10.1.1)
+    rake (13.0.1)
     regexp_parser (1.7.1)
     rexml (3.2.4)
     rspec (3.3.0)
@@ -55,7 +55,7 @@ DEPENDENCIES
   json
   json2html!
   nokogiri
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec
   rubocop
   yard
